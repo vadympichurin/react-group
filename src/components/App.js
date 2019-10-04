@@ -1,48 +1,53 @@
 import React, { Component } from "react";
-import Counter from "./Counter";
-import Toggle from "./Toggle";
-import MessageUpdater from "./MessageUpdater";
-import StepChanger from './StepChanger';
+// import SignUpForm from './SignUpForm';
+import NoteList from "./NoteList";
+import NoteEditor from "./NoteEditor";
+// import v4 from 'uuid/v4' // библиотека для генерации ID
+import NoteFilter from "./NoteFilter";
+
+const FilterNotes = (filter, notes) => {
+  return notes.filter(note => note.text.toLowerCase().includes(filter.toLowerCase()));
+};
 
 export default class App extends Component {
   state = {
-    message: Date.now(),
-    counterState: 0,
+    notes: [],
+    filter: ""
   };
 
-  handleChangeStep = () => {
-      this.setState((prevState) => ({
-          counterState: prevState.counterState + 1,
-      }));
+  handleAddNote = text => {
+    this.setState(prevState => ({
+      notes: [{ id: Date.now(), text }, ...prevState.notes]
+    }));
   };
 
-  updateMessage = () => {
+  handleDeleteNote = id => {
+    this.setState(prevState => ({
+      notes: prevState.notes.filter(note => note.id !== id)
+    }));
+  };
+
+  handleFilterChange = evt => {
+    console.log(evt.target.value);
+
     this.setState({
-      message: Date.now()
+      filter: evt.target.value
     });
   };
 
   render() {
+    const { notes, filter } = this.state;
 
-    const { counterState } = this.state;
+    const filteredNotes = FilterNotes(filter, notes);
 
     return (
       <div>
-
-          <StepChanger counterState={this.state.counterState} onUpdateStep={this.handleChangeStep} />
-          <Counter step={this.state.counterState} initialValue={10} />
-
-
-
-
-        {/* <MessageUpdater changeMessage={this.updateMessage} /> */}
-
-        {/* <h2>{this.state.message}</h2> */}
-
-        {/* <Toggle>
-          <h1> Togglable content </h1>
-          <Counter step={this.state.counterState} initialValue={10} />
-        </Toggle> */}
+        <h1>Forms in React</h1>
+        <NoteEditor onSubmit={this.handleAddNote} />
+        <NoteList notes={filteredNotes} onDelete={this.handleDeleteNote} />
+        <hr />
+        <NoteFilter filter={filter} onFilterChange={this.handleFilterChange} />
+        {/* <SignUpForm /> */}
       </div>
     );
   }
