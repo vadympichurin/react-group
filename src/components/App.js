@@ -1,54 +1,40 @@
 import React, { Component } from "react";
-// import SignUpForm from './SignUpForm';
-import NoteList from "./NoteList";
-import NoteEditor from "./NoteEditor";
-// import v4 from 'uuid/v4' // библиотека для генерации ID
-import NoteFilter from "./NoteFilter";
+import { Route, Switch, Redirect, Link, NavLink } from "react-router-dom";
+import Navigation from './Navigation';
 
-const FilterNotes = (filter, notes) => {
-  return notes.filter(note => note.text.toLowerCase().includes(filter.toLowerCase()));
-};
+import HomePage from '../pages/HomePage';
+import ArticlePage from '../pages/ArticlePage';
+import NotFoundPage from '../pages/NotFoundPage';
+import AboutPage from '../pages/AboutPage';
 
-export default class App extends Component {
-  state = {
-    notes: [],
-    filter: ""
-  };
+import Article from './Article';
+import SingleArticlePage from '../pages/SingleArticlePage';
 
-  handleAddNote = text => {
-    this.setState(prevState => ({
-      notes: [{ id: Date.now(), text }, ...prevState.notes]
-    }));
-  };
+// const AboutPage = () => <h1>About Page</h1>;
+// const HomePage = ({title}) => <h1>{title}</h1>;
+// const NotPage = () => <h1>Component not found</h1>
+// const ArticlesPage = () => <h1>Article page</h1>
 
-  handleDeleteNote = id => {
-    this.setState(prevState => ({
-      notes: prevState.notes.filter(note => note.id !== id)
-    }));
-  };
+// NavLink имеет два атрибута activeStyle & activeClassName которые нужны для стилизации, также есть exact
 
-  handleFilterChange = evt => {
-    console.log(evt.target.value);
+const App = () => (
+  <div>
 
-    this.setState({
-      filter: evt.target.value
-    });
-  };
+    <Navigation />
 
-  render() {
-    const { notes, filter } = this.state;
+    <Switch>
+      {/* <Route exact path="/" component={HomePage} /> */}
+      <Route exact path="/" render={ (props) => <HomePage title="HOME PAGE" {...props} />} />
+      <Route path="/about" component={AboutPage} />
+      <Route exact path="/articles" component={ArticlePage} />
+      <Route path="/articles/:id" component={SingleArticlePage} />
 
-    const filteredNotes = FilterNotes(filter, notes);
+      <Route component={NotFoundPage} />
+      {/* <Route  component={NotPage} /> */}
 
-    return (
-      <div>
-        <h1>Forms in React</h1>
-        <NoteEditor onSubmit={this.handleAddNote} />
-        <NoteList notes={filteredNotes} onDelete={this.handleDeleteNote} />
-        <hr />
-        <NoteFilter filter={filter} onFilterChange={this.handleFilterChange} />
-        {/* <SignUpForm /> */}
-      </div>
-    );
-  }
-}
+      {/* <Redirect to="/" /> */}
+    </Switch>
+  </div>
+);
+
+export default App;
