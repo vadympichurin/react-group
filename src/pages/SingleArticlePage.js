@@ -15,12 +15,25 @@ export default class SingleArticlePage extends Component {
         api.fetchArticleById(this.props.match.params.id).then(article => this.setState({ ...article }));
     };
 
+    handleGoBack = () => {
+        const { state } = this.props.location;
+        const { category } = this.state;
+
+        if(state){
+           return this.props.history.push(state.from); // возвращает нас на один шаг назад
+        }
+        this.props.history.push({
+            pathname: '/articles',
+            search: `?category=${category}`,
+        });
+    };
+
     render(){
 
         const { id, imageUrl, title, author, body, category } = this.state;
 
         return(
-            <article>
+            <article key={id}>
                 <h2>{title}</h2>
                 <img src={imageUrl} alt={title} />
                 <p>
@@ -30,6 +43,7 @@ export default class SingleArticlePage extends Component {
                     <b>Category: { category } </b>
                 </p>
                 <p> {body} </p>
+                <button onClick={this.handleGoBack} >Back to articles</button>
             </article>
         );
     }
