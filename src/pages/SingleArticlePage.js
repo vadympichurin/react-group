@@ -17,7 +17,7 @@ export default class SingleArticlePage extends Component {
 
     render(){
 
-        const { id, imageUrl, title, author, body, category } = this.state;
+        const { imageUrl, title, author, body, category } = this.state;
 
         return(
             <article>

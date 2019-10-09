@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import * as api from '../api-mock/api';
 import ArticleList from '../components/ArticleList';
-import { Route } from 'react-router-dom';
-import Article from '../components/Article';
+// import { Route } from 'react-router-dom';
+// import Article from '../components/Article';
 
 export default class ArticlePage extends Component {
     state = {
