@@ -1,9 +1,10 @@
 
 
 const ACTION_TYPES = {
-    INCREMENT: "INCREMENT",
-    DECREMENT: "DECREMENT",
-    RESET: "RESET",
+    INCREMENT: "[counter] INCREMENT",
+    DECREMENT: "[counter] DECREMENT",
+    RESET: "[counter] RESET",
+    CHANGE_STEP: "[step selector] CHANGE_STEP",
   };
 
   export default ACTION_TYPES;

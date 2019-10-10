@@ -1,9 +1,11 @@
 import React from 'react';
 import Counter from './Counter';
+import StepSelector from './StepSelector';
 
 const App = () => (
   <div>
-    <Counter superprops="super" />
+    <StepSelector />
+    <Counter />
   </div>
 );
 

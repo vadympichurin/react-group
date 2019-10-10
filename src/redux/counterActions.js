@@ -14,4 +14,9 @@ const increment = value => ({
     type: types.RESET,
   });
 
-  export { increment, decrement, reset };
+  const changeStep = step => ({
+    type: types.CHANGE_STEP,
+    payload: step,
+  });
+
+  export { increment, decrement, reset, changeStep };
